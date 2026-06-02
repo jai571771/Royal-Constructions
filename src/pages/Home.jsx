@@ -88,8 +88,8 @@ export default function Home() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 max-w-content mx-auto px-6 pt-16 flex flex-col items-center">
-          <span className="text-orange text-xs md:text-sm uppercase tracking-[0.3em] font-extrabold mb-4 bg-orange/15 px-4 py-2 rounded-full border border-orange/20 animate-fade-in font-poppins">
+        <div className="relative z-10 max-w-content mx-auto px-6 pt-28 md:pt-16 flex flex-col items-center">
+          <span className="text-orange text-xs md:text-sm uppercase tracking-[0.3em] font-extrabold mb-6 md:mb-4 bg-orange/15 px-4 py-2 rounded-full border border-orange/20 animate-fade-in font-poppins">
             Transforming Spaces. Building Trust. Delivering Excellence.
           </span>
           <h1 className="font-poppins text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6 leading-[1.1] max-w-4xl animate-fade-up">
