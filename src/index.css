@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white text-black font-inter antialiased overflow-x-hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins text-black;
+  }
+}
+
+@layer components {
+  /* Design guidelines container */
+  .container-custom {
+    @apply max-w-site mx-auto px-6 w-full;
+  }
+
+  /* Spacing Scale Utilities */
+  .section-padding {
+    @apply py-32 md:py-32 py-20; /* 120px desktop / 80px mobile */
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply h-14 px-8 bg-orange text-white rounded-button font-inter font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-soft hover:bg-black hover:-translate-y-1;
+  }
+
+  .btn-secondary {
+    @apply h-14 px-8 border-2 border-white bg-transparent text-white rounded-button font-inter font-semibold transition-all duration-300 flex items-center justify-center gap-2 hover:bg-orange hover:border-orange hover:-translate-y-1;
+  }
+
+  .btn-dark {
+    @apply h-14 px-8 bg-black text-white rounded-button font-inter font-semibold transition-all duration-300 flex items-center justify-center gap-2 hover:bg-orange hover:-translate-y-1 shadow-soft;
+  }
+
+  /* Cards */
+  .card-premium {
+    @apply bg-white rounded-2xl p-8 border border-lightgray-border shadow-soft transition-all duration-300 hover:-translate-y-[10px] hover:shadow-glow hover:border-orange/20;
+  }
+
+  /* Glassmorphism */
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-premium text-white;
+  }
+  
+  .glass-dark-card {
+    @apply bg-black/60 backdrop-blur-lg border border-white/10 rounded-2xl p-8 shadow-premium text-white;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+::-webkit-scrollbar-thumb {
+  background: #FF6B00;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D4A017;
+}
+
+/* Glassmorphism Testimonials Background */
+.bg-premium-gradient {
+  background: radial-gradient(circle at 50% 50%, #222222 0%, #111111 100%);
+}
+
+/* Image Zoom and Overlay styles for Projects */
+.project-card-image-wrap {
+  @apply overflow-hidden relative rounded-t-2xl;
+}
+.project-card-image {
+  @apply w-full h-64 object-cover transition-transform duration-500;
+}
+.project-card-overlay {
+  @apply absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300 flex items-center justify-center;
+}
+.project-card-wrap:hover .project-card-image {
+  transform: scale(1.1);
+}
+.project-card-wrap:hover .project-card-overlay {
+  @apply opacity-100;
+}
+
+/* Custom styles for Before/After Slider */
+.slider-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+}
+.slider-image {
+  display: block;
+  width: 100%;
+  height: 480px;
+  object-cover: cover;
+}
+
+/* Text outline animation for stats numbers */
+.text-outline-orange {
+  color: transparent;
+  -webkit-text-stroke: 1.5px #FF6B00;
+}
+
+.text-outline-gray {
+  color: transparent;
+  -webkit-text-stroke: 1px #d1d5db; /* Tailwind gray-300 */
+}
+
+@media (min-width: 768px) {
+  .text-outline-gray {
+    -webkit-text-stroke: 1.5px #d1d5db;
+  }
+}
+
+/* Marquee Scrolling Animations */
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 50s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 50s linear infinite;
+}
+
+/* Blueprint watermark background pattern */
+.bg-blueprint {
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('/assets/images/blueprint_pattern.png');
+  background-repeat: repeat;
+  background-size: 800px;
+}
