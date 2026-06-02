@@ -50,8 +50,9 @@ export default function ProjectCard({ project }) {
           <Link
             to={`/projects/${project.id}`}
             className="flex items-center gap-1.5 font-inter text-sm font-bold text-orange group-hover:text-black transition-colors"
+            aria-label={`Explore case study for ${project.title}`}
           >
-            <span>Read More</span>
+            <span>Explore Project</span>
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
