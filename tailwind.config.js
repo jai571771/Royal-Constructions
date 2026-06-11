@@ -27,7 +27,8 @@ export default {
         }
       },
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'],
+        poppins: ['Inter', 'sans-serif'],
+        montserrat: ['Inter', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
       },
       borderRadius: {

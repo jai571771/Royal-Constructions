@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, Star, ChevronDown, CheckCircle2, Play, Users, Award, Calendar, ExternalLink, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Star, ChevronDown, CheckCircle2, Play, Users, Award, Calendar, ExternalLink, ShieldCheck, Mail } from 'lucide-react';
 import StatsCounter from '../components/StatsCounter';
 import ProjectCard from '../components/ProjectCard';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
@@ -14,6 +14,24 @@ export default function Home() {
   const [activeProjectTab, setActiveProjectTab] = useState('All');
   const [faqOpen, setFaqOpen] = useState(null);
   const [activeServiceIdx, setActiveServiceIdx] = useState(0);
+  const [email, setEmail] = useState('');
+  const [bgIndex, setBgIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBgIndex((prev) => (prev === 0 ? 1 : 0));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleConsultationSubmit = (e) => {
+    e.preventDefault();
+    if (email.trim()) {
+      navigate('/contact', { state: { email: email.trim() } });
+    } else {
+      navigate('/contact');
+    }
+  };
 
   // FAQ Dataset
   const faqs = [
@@ -76,62 +94,169 @@ export default function Home() {
     <div className="overflow-x-hidden">
       
       {/* 1. HERO SECTION */}
-      <section className="relative h-screen flex items-center justify-center text-center overflow-hidden bg-black">
-        {/* Background Image / Overlay (Lighter settings) */}
+      <section className="relative min-h-screen pt-28 pb-16 lg:pt-36 flex items-center bg-[#0B0B0B] overflow-hidden">
+        {/* Background Image (Fully Visible as Original) with smooth crossfade shuffle */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/assets/images/project_ecr_villa.png" 
-            alt="Luxury Villa Construction" 
-            className="w-full h-full object-cover opacity-65"
+            src="/assets/images/hero_bg_optimized.png" 
+            alt="Luxury Villa Under Construction" 
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 animate-kenburns ${
+              bgIndex === 0 ? 'opacity-100' : 'opacity-0'
+            }`}
           />
-          <div className="absolute inset-0 bg-black/45" />
+          <img 
+            src="/assets/images/hero_bg_completed.png" 
+            alt="Completed Luxury Villa" 
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 animate-kenburns ${
+              bgIndex === 1 ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 max-w-content mx-auto px-6 pt-28 md:pt-16 flex flex-col items-center">
-          <span className="text-orange text-xs md:text-sm uppercase tracking-[0.3em] font-extrabold mb-6 md:mb-4 bg-orange/15 px-4 py-2 rounded-full border border-orange/20 animate-fade-in font-poppins">
-            Transforming Spaces. Building Trust. Delivering Excellence.
-          </span>
-          <h1 className="font-poppins text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6 leading-[1.1] max-w-4xl animate-fade-up">
-            Building Dreams.<br className="hidden md:block"/> Designing Excellence.
-          </h1>
-          <p className="font-inter text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mb-10 leading-relaxed">
-            Premium Residential Construction, Custom Interior Design & Commercial Projects Across Chennai, Chengalpattu & Maduranthakam.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full justify-center">
-            <Link to="/contact" className="btn-primary w-full sm:w-auto h-14 text-base">
-              Get Free Consultation
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <Link to="/projects" className="btn-secondary w-full sm:w-auto h-14 text-base">
-              View Our Projects
-            </Link>
-          </div>
-
-          {/* Redesigned Trust stats capsule */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8 mt-10 px-6 md:px-8 py-4 rounded-2xl md:rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-premium max-w-4xl w-full select-none">
-            <div className="flex items-center gap-2 text-white font-inter text-xs md:text-sm font-semibold tracking-wide uppercase">
-              <Star className="w-4 h-4 text-orange fill-orange flex-shrink-0" />
-              <span>Top Rated Builder</span>
+        {/* Content Container */}
+        <div className="relative z-10 max-w-content mx-auto px-6 w-full">
+          <div className="max-w-3xl flex flex-col items-start text-left animate-fade-in">
+            
+            {/* Hiring/Consultation Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-xs font-semibold text-white mb-6 select-none">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Chennai's Premier Builder</span>
+              <span className="text-white/20">|</span>
+              <span className="text-white/80">Book a Site Consultation</span>
+              <ArrowRight className="w-3.5 h-3.5 text-white/50" />
             </div>
-            <div className="hidden sm:block w-[1px] h-5 bg-white/10" />
-            <div className="flex items-center gap-2 text-white font-inter text-xs md:text-sm font-semibold tracking-wide uppercase">
-              <Award className="w-4 h-4 text-gold fill-gold flex-shrink-0" />
-              <span>10+ Years Trust</span>
-            </div>
-            <div className="hidden sm:block w-[1px] h-5 bg-white/10" />
-            <div className="flex items-center gap-2 text-white font-inter text-xs md:text-sm font-semibold tracking-wide uppercase">
-              <ShieldCheck className="w-4 h-4 text-orange flex-shrink-0" />
-              <span>10-Yr Structural Warranty</span>
-            </div>
-          </div>
-        </div>
 
-        {/* Scroll down mouse */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 hidden md:block">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1">
-            <span className="w-1 h-2 bg-orange rounded-full animate-bounce" />
+            {/* Title */}
+            <h1 className="font-poppins text-4xl sm:text-5xl lg:text-[52px] font-extrabold text-white leading-[1.1] tracking-tight mb-6 animate-fade-up">
+              We Use Expert Engineering to Deliver <span className="text-orange">Stronger, Smarter</span> Construction in Chennai
+            </h1>
+
+            {/* Description */}
+            <p className="font-inter text-base sm:text-lg text-white/70 leading-relaxed mb-8 max-w-xl">
+              From ECR to OMR, we've been Chennai's trusted builders for 10+ years—delivering on-time, budget-friendly projects with concrete-strength reliability.
+            </p>
+
+            {/* Glassmorphic Consultation capsule */}
+            <form onSubmit={handleConsultationSubmit} className="relative flex flex-col sm:flex-row items-center p-2 rounded-2xl sm:rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-premium max-w-lg mb-8 gap-2 w-full">
+              <div className="flex items-center gap-3 px-3 flex-grow w-full">
+                <Mail className="w-5 h-5 text-white/40 flex-shrink-0" />
+                <input 
+                  type="email"
+                  placeholder="Enter email address..."
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-transparent border-none outline-none text-white text-sm placeholder-white/40 w-full focus:ring-0 py-2"
+                />
+              </div>
+              <button 
+                type="submit" 
+                className="w-full sm:w-auto px-6 h-12 bg-white hover:bg-orange hover:text-white text-black font-poppins font-bold text-sm rounded-xl sm:rounded-full transition-all duration-300 flex-shrink-0 flex items-center justify-center gap-2 shadow-soft"
+              >
+                Book a Consultation
+              </button>
+
+              {/* Hand-drawn SVG Arrow pointing at button */}
+              <div className="absolute right-[-110px] top-1/2 -translate-y-1/2 hidden lg:block pointer-events-none select-none">
+                <svg width="100" height="60" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white/60">
+                  {/* Stem Curve */}
+                  <path d="M 92 10 C 84 -2 72 0 68 18 C 65 32 52 34 46 22 C 40 8 53 4 55 18 C 56 28 30 36 10 30" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  {/* Arrowhead Outline */}
+                  <path d="M 10 30 C 14 26 19 22 25 18 C 23.5 22 22 26.5 21 30 C 22 33.5 23.5 38 25 42 C 19 38 14 34 10 30 Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  {/* Hatching Lines */}
+                  <path d="M 13 27.5 L 14 32.5 M 15 26 L 17 34 M 17 24.5 L 19 35.5 M 19 22.8 L 21 37.2 M 21 21.2 L 23 38.8 M 23 19.6 L 24 28 M 23 40.4 L 24 32" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
+                </svg>
+              </div>
+            </form>
+
+            {/* Specialists Team Avatars */}
+            <div className="flex items-center gap-4 mb-8 select-none">
+              <div className="flex -space-x-3">
+                <div className="w-9 h-9 rounded-full border-2 border-black overflow-hidden bg-white/10">
+                  <img src="/assets/images/team_1.png" alt="Mr. Fazil Ahamed" className="w-full h-full object-cover" />
+                </div>
+                <div className="w-9 h-9 rounded-full border-2 border-black overflow-hidden bg-white/10">
+                  <img src="/assets/images/team_2.png" alt="Meenakshi Sundaram" className="w-full h-full object-cover" />
+                </div>
+                <div className="w-9 h-9 rounded-full border-2 border-black overflow-hidden bg-white/10">
+                  <img src="/assets/images/team_3.png" alt="Er. Rajesh Kumar" className="w-full h-full object-cover" />
+                </div>
+                <div className="w-9 h-9 rounded-full border-2 border-black overflow-hidden bg-white/10 flex items-center justify-center bg-orange text-white text-[10px] font-bold">
+                  +12
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-xs md:text-sm font-semibold text-white">15+ Construction Specialists</span>
+                <span className="text-[10px] md:text-xs text-white/50">Dedicated to Your Project's Success</span>
+              </div>
+            </div>
+
+            {/* Rating metrics row */}
+            <div className="grid grid-cols-2 gap-6 w-full max-w-md pt-6 border-t border-white/10 mb-8 select-none">
+              {/* Google / Reviews.io Column */}
+              <div>
+                <div className="flex gap-0.5 mb-1.5 text-orange">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-orange text-orange" />
+                  ))}
+                </div>
+                <span className="block text-xs font-bold text-white mb-0.5">4.9/5 (25k+ Reviews)</span>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3.5 h-3.5 rounded-full bg-[#FF6B00] text-white flex items-center justify-center font-bold text-[8px] font-inter">★</div>
+                  <span className="text-[10px] tracking-wider uppercase text-white/60 font-bold font-inter">Reviews.io</span>
+                </div>
+              </div>
+
+              {/* Trustpilot Column */}
+              <div>
+                <div className="flex gap-0.5 mb-1.5">
+                  {[...Array(5)].map((_, i) => (
+                    <div key={i} className="w-3.5 h-3.5 bg-emerald-500 flex items-center justify-center rounded-[2px]">
+                      <Star className="w-2.5 h-2.5 fill-white text-white" />
+                    </div>
+                  ))}
+                </div>
+                <span className="block text-xs font-bold text-white mb-0.5">4.8/5 (54k+ Reviews)</span>
+                <div className="flex items-center gap-1">
+                  <Star className="w-3.5 h-3.5 fill-emerald-500 text-emerald-500" />
+                  <span className="text-[10px] tracking-wider uppercase text-white/60 font-bold font-inter">Trustpilot</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Grayscale Partner Logos */}
+            <div className="pt-6 border-t border-white/10 w-full select-none">
+              <span className="text-[10px] uppercase tracking-widest text-white/40 font-bold mb-4 block">
+                Trusted by hundreds of property owners in Chennai
+              </span>
+              <div className="flex flex-wrap items-center gap-6 md:gap-8 opacity-30 hover:opacity-50 transition-opacity duration-300">
+                {/* Ramco Cement typography logo */}
+                <div className="text-white font-poppins font-extrabold text-sm tracking-wider uppercase flex items-center gap-1">
+                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="12,2 22,8.5 22,20 12,14 2,20 2,8.5" />
+                  </svg>
+                  <span>RAMCO</span>
+                </div>
+                {/* UltraTech logo style */}
+                <div className="text-white font-poppins font-black text-sm tracking-tighter uppercase">
+                  Ultra<span className="text-orange">Tech</span>
+                </div>
+                {/* JSW Steel */}
+                <div className="text-white font-inter font-black text-base tracking-widest italic uppercase">
+                  JSW <span className="font-normal not-italic text-xs text-white/70">STEEL</span>
+                </div>
+                {/* Ramco Cements logoipsum Clover styling */}
+                <div className="text-white font-poppins font-extrabold text-sm tracking-wider uppercase flex items-center gap-1">
+                  <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="6" cy="12" r="4" />
+                    <circle cx="18" cy="12" r="4" />
+                    <circle cx="12" cy="6" r="4" />
+                    <circle cx="12" cy="18" r="4" />
+                  </svg>
+                  <span>ROYAL</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
