@@ -2,6 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { User, Calendar, Clock, ArrowLeft, ArrowRight, BookOpen, ChevronRight } from 'lucide-react';
 import { blogData } from '../data/blogData';
+import { motion } from 'framer-motion';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } 
+  }
+};
 
 export default function Blog() {
   const { blogId } = useParams();
@@ -27,7 +37,7 @@ export default function Blog() {
     if (!article) {
       return (
         <div className="pt-32 pb-20 text-center min-h-[60vh] flex flex-col items-center justify-center bg-blueprint bg-white">
-          <h2 className="font-poppins text-3xl font-extrabold mb-4 text-black">Article Not Found</h2>
+          <h2 className="text-h2 text-black mb-4">Article Not Found</h2>
           <Link to="/blog" className="btn-primary">
             <ArrowLeft className="w-4 h-4" />
             Back to Articles
@@ -41,7 +51,12 @@ export default function Blog() {
         
         {/* Article Header Banner */}
         <section className="bg-lightgray py-12 border-b border-lightgray-border">
-          <div className="container-custom max-w-4xl">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="container-custom max-w-4xl"
+          >
             
             {/* Breadcrumb */}
             <div className="flex items-center gap-1 text-xs text-black/40 font-inter mb-4">
@@ -55,7 +70,7 @@ export default function Blog() {
             <span className="bg-orange text-white text-[10px] font-bold px-3 py-1 rounded-button uppercase tracking-wider block w-max mb-4">
               {article.category}
             </span>
-            <h1 className="font-poppins text-2xl sm:text-3xl md:text-4xl font-extrabold text-black mb-6 leading-tight">
+            <h1 className="text-h2 text-black mb-6">
               {article.title}
             </h1>
 
@@ -75,12 +90,18 @@ export default function Blog() {
               </div>
             </div>
 
-          </div>
+          </motion.div>
         </section>
 
         {/* Article Body */}
         <section className="py-16">
-          <div className="container-custom max-w-3xl">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="container-custom max-w-3xl"
+          >
             
             {/* Lead Image */}
             <div className="rounded-2xl overflow-hidden shadow-soft h-[250px] md:h-[400px] mb-12 border border-lightgray-border">
@@ -128,7 +149,7 @@ export default function Blog() {
                 // Parse bold markers inside standard paragraphs
                 const parts = paragraph.split('**');
                 return (
-                  <p key={index} className="leading-relaxed">
+                  <p key={index} className="text-body text-black/75 mb-6">
                     {parts.map((p, pIdx) => pIdx % 2 === 1 ? <strong key={pIdx} className="text-black font-bold">{p}</strong> : p)}
                   </p>
                 );
@@ -151,22 +172,28 @@ export default function Blog() {
               </div>
             </div>
 
-          </div>
+          </motion.div>
         </section>
 
         {/* CTA */}
         <section className="bg-lightgray py-16 border-t border-lightgray-border">
-          <div className="container-custom max-w-3xl text-center">
-            <h3 className="font-poppins text-xl md:text-2xl font-bold mb-3 text-black">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeInUp}
+            className="container-custom max-w-3xl text-center"
+          >
+            <h3 className="text-h3 text-black mb-3">
               Planning to Build a Custom Home in Chennai?
             </h3>
-            <p className="font-inter text-xs md:text-sm text-black/60 mb-6">
+            <p className="text-body text-black/60 mb-6 max-w-none">
               Our engineering coordinators offer expert assistance on planning regulations and foundation footings.
             </p>
             <Link to="/contact" className="btn-primary inline-flex">
               Get Free Consultation
             </Link>
-          </div>
+          </motion.div>
         </section>
 
       </div>
@@ -187,29 +214,40 @@ export default function Blog() {
           />
           <div className="absolute inset-0 bg-black/75" />
         </div>
-        <div className="relative z-10 max-w-content mx-auto px-6 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 max-w-content mx-auto px-6 text-center"
+        >
           <span className="text-orange text-xs md:text-sm uppercase tracking-[0.25em] font-extrabold mb-3 bg-orange/15 px-4 py-2 rounded-full border border-orange/20 inline-block font-poppins">
             Transforming Spaces. Building Trust. Delivering Excellence.
           </span>
-          <h1 className="font-poppins text-3xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight">
+          <h1 className="text-h1 text-white mb-6">
             Knowledge Hub & Guides
           </h1>
-          <p className="font-inter text-base md:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-body text-white/60 max-w-2xl mx-auto mb-6">
             Educational insights regarding structural foundations, concrete curing checkpoints, and local building regulations in Chennai.
           </p>
-        </div>
+        </motion.div>
       </section>
 
       {/* 2. Grid & Filter Listing */}
       <section className="section-padding bg-blueprint bg-white">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           
           {/* Header & Tabs */}
           <div className="flex flex-col items-center mb-16 text-center">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3 font-poppins">
+            <span className="label-uppercase">
               Resource Guides
             </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-8 text-black">
+            <h2 className="text-h2 text-black mb-8">
               Educational Resource Articles
             </h2>
 
@@ -253,10 +291,10 @@ export default function Blog() {
                   <span className="block text-[11px] font-semibold text-black/40 uppercase tracking-widest font-inter mb-2">
                     {article.date} · {article.readTime}
                   </span>
-                  <h3 className="font-poppins text-lg font-bold text-black mb-3 leading-snug group-hover:text-orange transition-colors">
+                  <h3 className="text-h3 text-black mb-3 group-hover:text-orange transition-colors">
                     <Link to={`/blog/${article.id}`}>{article.title}</Link>
                   </h3>
-                  <p className="font-inter text-xs md:text-sm text-black/60 mb-6 leading-relaxed flex-grow">
+                  <p className="text-body text-black/60 mb-6 leading-relaxed flex-grow">
                     {article.shortDesc}
                   </p>
                   <Link 
@@ -280,7 +318,7 @@ export default function Blog() {
             </div>
           )}
 
-        </div>
+        </motion.div>
       </section>
 
     </div>

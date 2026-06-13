@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import ProjectCard from '../components/ProjectCard';
 import { projectsData } from '../data/projectsData';
+import { motion } from 'framer-motion';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } 
+  }
+};
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState('All');
@@ -24,29 +34,40 @@ export default function Projects() {
           />
           <div className="absolute inset-0 bg-black/75" />
         </div>
-        <div className="relative z-10 max-w-content mx-auto px-6 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 max-w-content mx-auto px-6 text-center"
+        >
           <span className="text-orange text-xs md:text-sm uppercase tracking-[0.25em] font-extrabold mb-3 bg-orange/15 px-4 py-2 rounded-full border border-orange/20 inline-block font-poppins">
             Transforming Spaces. Building Trust. Delivering Excellence.
           </span>
-          <h1 className="font-poppins text-3xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">
+          <h1 className="text-h1 text-white mb-6">
             Our Portfolios
           </h1>
-          <p className="font-inter text-base md:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-body text-white/60 max-w-2xl mx-auto mb-6">
             Take an in-depth look at our completed luxury villas, commercial zones, modern transformations, and Scandinavian interior designs.
           </p>
-        </div>
+        </motion.div>
       </section>
 
       {/* 2. Filter Tabs & Grid Showcase */}
       <section className="section-padding bg-blueprint bg-white">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           
           {/* Tabs header */}
           <div className="flex flex-col items-center mb-16 text-center">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3 font-poppins">
+            <span className="label-uppercase">
               Completed Portfolios
             </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-8 text-black">
+            <h2 className="text-h2 text-black mb-8">
               Explore Our Project Gallery
             </h2>
 
@@ -86,25 +107,31 @@ export default function Projects() {
             </div>
           )}
 
-        </div>
+        </motion.div>
       </section>
 
       {/* 3. Mid Lead capture banner */}
       <section className="bg-orange py-16 text-white text-center">
-        <div className="container-custom max-w-3xl mx-auto">
-          <h2 className="font-poppins text-2xl md:text-3xl font-extrabold mb-4 text-white">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom max-w-3xl mx-auto"
+        >
+          <h2 className="text-h2 text-white mb-4">
             Have a Similar Project in Mind? Let's Discuss
           </h2>
-          <p className="font-inter text-sm md:text-base text-white/80 mb-6">
+          <p className="text-body text-white/80 max-w-2xl mx-auto mb-6">
             Our structural engineers and designers are ready to translate your spatial ideas into structural blueprints.
           </p>
           <a
             href="tel:+917305485051"
-            className="inline-flex h-12 px-8 bg-black hover:bg-white hover:text-black text-white rounded-button font-inter text-sm font-semibold items-center justify-center transition-colors shadow-soft"
+            className="btn-dark inline-flex"
           >
             Discuss Similar Project
           </a>
-        </div>
+        </motion.div>
       </section>
 
     </div>

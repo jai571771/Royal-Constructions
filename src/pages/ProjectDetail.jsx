@@ -2,6 +2,16 @@ import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MapPin, User, Calendar, Ruler, Award, CheckCircle2, ArrowLeft, Star, Phone } from 'lucide-react';
 import { projectsData } from '../data/projectsData';
+import { motion } from 'framer-motion';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } 
+  }
+};
 
 export default function ProjectDetail() {
   const { projectId } = useParams();
@@ -40,7 +50,12 @@ export default function ProjectDetail() {
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-content mx-auto w-full px-6 pb-12 text-white">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 max-w-content mx-auto w-full px-6 pb-12 text-white"
+        >
           <Link 
             to="/projects" 
             className="inline-flex items-center gap-1.5 text-xs md:text-sm uppercase tracking-wider font-bold text-orange hover:text-white transition-colors mb-6"
@@ -51,7 +66,7 @@ export default function ProjectDetail() {
           <span className="bg-orange text-white text-[10px] font-bold px-3 py-1 rounded-button uppercase tracking-wider block w-max mb-3">
             {project.category}
           </span>
-          <h1 className="font-poppins text-3xl md:text-5xl font-extrabold mb-4 tracking-tight leading-tight">
+          <h1 className="text-h1 text-white mb-4">
             {project.title}
           </h1>
           <div className="flex flex-wrap items-center gap-4 text-xs md:text-sm text-white/70 font-inter">
@@ -65,12 +80,18 @@ export default function ProjectDetail() {
               <span>Client: {project.client}</span>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 2. Project Highlights Bar */}
       <section className="bg-lightgray py-6 border-b border-lightgray-border font-inter text-xs md:text-sm">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-black/10">
             <div className="pt-4 md:pt-0">
               <span className="block text-black/45 uppercase text-[10px] tracking-wider font-semibold">Total Area</span>
@@ -89,12 +110,18 @@ export default function ProjectDetail() {
               <span className="block text-orange font-extrabold text-base mt-1">ISO Certified</span>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 3. Detail Columns (Overview, Requirements, Challenges, Solution) */}
       <section className="section-padding bg-blueprint bg-white">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
             
             {/* Left Content (2 Cols) */}
@@ -102,20 +129,20 @@ export default function ProjectDetail() {
               
               {/* Overview */}
               <div>
-                <h2 className="font-poppins text-xl md:text-2xl font-bold mb-4 text-black border-b border-lightgray-border pb-3">
+                <h2 className="text-h3 text-black mb-4 border-b border-lightgray-border pb-3">
                   Project Overview
                 </h2>
-                <p className="font-inter text-sm md:text-base text-black/60 leading-relaxed">
+                <p className="text-body text-black/60 mb-6">
                   {project.overview}
                 </p>
               </div>
 
               {/* Client Requirements */}
               <div>
-                <h2 className="font-poppins text-xl md:text-2xl font-bold mb-4 text-black border-b border-lightgray-border pb-3">
+                <h2 className="text-h3 text-black mb-4 border-b border-lightgray-border pb-3">
                   Client Requirements
                 </h2>
-                <p className="font-inter text-sm md:text-base text-black/60 leading-relaxed">
+                <p className="text-body text-black/60 mb-6">
                   {project.requirements}
                 </p>
               </div>
@@ -138,10 +165,10 @@ export default function ProjectDetail() {
 
               {/* Result Summary */}
               <div>
-                <h2 className="font-poppins text-xl md:text-2xl font-bold mb-4 text-black border-b border-lightgray-border pb-3">
+                <h2 className="text-h3 text-black mb-4 border-b border-lightgray-border pb-3">
                   Final Result
                 </h2>
-                <p className="font-inter text-sm md:text-base text-black/60 leading-relaxed">
+                <p className="text-body text-black/60 mb-6">
                   {project.result}
                 </p>
               </div>
@@ -153,7 +180,7 @@ export default function ProjectDetail() {
               
               {/* Construction Process */}
               <div className="p-6 md:p-8 bg-lightgray rounded-2xl border border-lightgray-border">
-                <h3 className="font-poppins font-bold text-black text-lg mb-6">Construction Process</h3>
+                <h3 className="text-h3 text-black mb-6">Construction Process</h3>
                 <div className="flex flex-col gap-5">
                   {project.process.map((step, idx) => (
                     <div key={idx} className="flex gap-3 items-start">
@@ -170,7 +197,7 @@ export default function ProjectDetail() {
 
               {/* Client Testimonial */}
               {project.testimonial && (
-                <div className="p-6 md:p-8 bg-orange/5 border border-orange/15 rounded-2xl relative overflow-hidden">
+                <div className="p-10 bg-orange/5 border border-orange/15 rounded-[24px] relative overflow-hidden">
                   <div className="absolute top-4 right-6 font-poppins font-extrabold text-7xl text-orange/5 select-none pointer-events-none">
                     “
                   </div>
@@ -179,7 +206,7 @@ export default function ProjectDetail() {
                       <Star key={i} className="w-3.5 h-3.5 fill-gold text-gold" />
                     ))}
                   </div>
-                  <p className="font-inter text-sm text-black/70 italic leading-relaxed mb-6">
+                  <p className="text-body text-black/70 italic leading-relaxed mb-6">
                     "{project.testimonial.text}"
                   </p>
                   <div>
@@ -194,13 +221,19 @@ export default function ProjectDetail() {
             </div>
 
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 4. Project Photos Gallery */}
       <section className="section-padding bg-lightgray">
-        <div className="container-custom">
-          <h2 className="font-poppins text-2xl md:text-3xl font-extrabold mb-8 text-black text-center">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
+          <h2 className="text-h2 text-black mb-8 text-center">
             Case Study Gallery
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -214,28 +247,34 @@ export default function ProjectDetail() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 5. CTA Project Inquiry */}
       <section className="bg-black text-white py-16 text-center relative overflow-hidden border-t border-white/10">
-        <div className="container-custom relative z-10 max-w-2xl mx-auto">
-          <h3 className="font-poppins text-2xl font-bold text-white mb-4">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom relative z-10 max-w-2xl mx-auto"
+        >
+          <h3 className="text-h2 text-white mb-4">
             Inspired by this Project?
           </h3>
-          <p className="font-inter text-sm text-white/60 mb-8">
+          <p className="text-body text-white/60 max-w-xl mx-auto mb-8">
             Schedule a site consultation. Let's discuss plans, material choices, and timeline configurations.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
-            <Link to="/contact" className="btn-primary w-full sm:w-auto h-12 text-sm">
+            <Link to="/contact" className="btn-primary w-full sm:w-auto">
               Discuss Similar Project
               <Phone className="w-4 h-4" />
             </Link>
-            <Link to="/projects" className="btn-secondary w-full sm:w-auto h-12 text-sm">
+            <Link to="/projects" className="btn-secondary w-full sm:w-auto">
               View Other Portfolios
             </Link>
           </div>
-        </div>
+        </motion.div>
       </section>
 
     </div>

@@ -19,34 +19,91 @@
 
   /* Spacing Scale Utilities */
   .section-padding {
-    @apply py-32 md:py-32 py-20; /* 120px desktop / 80px mobile */
+    padding-top: 90px;
+    padding-bottom: 90px;
+  }
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: 120px;
+      padding-bottom: 120px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .section-padding {
+      padding-top: 140px;
+      padding-bottom: 140px;
+    }
   }
 
   /* Buttons */
   .btn-primary {
-    @apply h-14 px-8 bg-orange text-white rounded-button font-inter font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-soft hover:bg-black hover:-translate-y-1;
+    @apply h-[60px] px-8 bg-orange text-white rounded-[16px] font-inter font-semibold transition-all duration-300 ease-in-out flex items-center justify-center gap-2 shadow-soft hover:bg-black hover:-translate-y-1;
   }
 
   .btn-secondary {
-    @apply h-14 px-8 border-2 border-white bg-transparent text-white rounded-button font-inter font-semibold transition-all duration-300 flex items-center justify-center gap-2 hover:bg-orange hover:border-orange hover:-translate-y-1;
+    @apply h-[60px] px-8 border-2 border-white bg-transparent text-white rounded-[16px] font-inter font-semibold transition-all duration-300 ease-in-out flex items-center justify-center gap-2 hover:bg-orange hover:border-orange hover:-translate-y-1;
   }
 
   .btn-dark {
-    @apply h-14 px-8 bg-black text-white rounded-button font-inter font-semibold transition-all duration-300 flex items-center justify-center gap-2 hover:bg-orange hover:-translate-y-1 shadow-soft;
+    @apply h-[60px] px-8 bg-black text-white rounded-[16px] font-inter font-semibold transition-all duration-300 ease-in-out flex items-center justify-center gap-2 hover:bg-orange hover:-translate-y-1 shadow-soft;
   }
 
   /* Cards */
   .card-premium {
-    @apply bg-white rounded-2xl p-8 border border-lightgray-border shadow-soft transition-all duration-300 hover:-translate-y-[10px] hover:shadow-glow hover:border-orange/20;
+    @apply bg-white rounded-[24px] p-10 border border-lightgray-border shadow-soft transition-all duration-300 hover:-translate-y-[10px] hover:shadow-glow hover:border-orange/20;
   }
 
   /* Glassmorphism */
   .glass-card {
-    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-premium text-white;
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-[24px] p-10 shadow-premium text-white;
   }
   
   .glass-dark-card {
-    @apply bg-black/60 backdrop-blur-lg border border-white/10 rounded-2xl p-8 shadow-premium text-white;
+    @apply bg-black/60 backdrop-blur-lg border border-white/10 rounded-[24px] p-10 shadow-premium text-white;
+  }
+}
+
+@layer utilities {
+  .text-h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  
+  .text-h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.3rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+  
+  .text-h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  
+  .text-body {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1rem, 1.2vw, 1.125rem);
+    line-height: 1.8;
+    font-weight: 400;
+    max-width: 65ch;
+  }
+  
+  .label-uppercase {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    letter-spacing: 0.2em;
+    font-weight: 600;
+    color: #FF6B00;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    display: block;
   }
 }
 

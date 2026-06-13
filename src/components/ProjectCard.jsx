@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function ProjectCard({ project }) {
   return (
-    <div className="group bg-white rounded-2xl overflow-hidden border border-lightgray-border shadow-soft transition-all duration-300 hover:-translate-y-2 hover:shadow-premium flex flex-col h-full project-card-wrap">
+    <motion.div 
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      className="group bg-white rounded-[24px] overflow-hidden border border-lightgray-border shadow-soft hover:shadow-premium flex flex-col h-full project-card-wrap"
+    >
       
       {/* Image Container with Zoom & Overlay */}
       <div className="relative overflow-hidden h-64 sm:h-72 w-full flex-shrink-0">
@@ -32,7 +37,7 @@ export default function ProjectCard({ project }) {
       </div>
 
       {/* Content Block */}
-      <div className="p-6 md:p-8 flex flex-col flex-grow">
+      <div className="p-8 md:p-10 flex flex-col flex-grow">
         <div className="flex items-center gap-1.5 text-xs text-black/40 mb-2 font-inter">
           <MapPin className="w-3.5 h-3.5 text-orange" />
           <span>{project.location}</span>
@@ -58,6 +63,6 @@ export default function ProjectCard({ project }) {
         </div>
       </div>
 
-    </div>
+    </motion.div>
   );
 }

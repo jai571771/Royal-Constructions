@@ -1,6 +1,16 @@
 import React from 'react';
 import { ShieldCheck, Award, FileText, CheckCircle2, Heart, Users, HardHat } from 'lucide-react';
 import StatsCounter from '../components/StatsCounter';
+import { motion } from 'framer-motion';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } 
+  }
+};
 
 export default function About() {
   const coreValues = [
@@ -45,45 +55,54 @@ export default function About() {
           />
           <div className="absolute inset-0 bg-black/75" />
         </div>
-        <div className="relative z-10 max-w-content mx-auto px-6 text-center">
-          <span className="text-orange text-xs md:text-sm uppercase tracking-[0.25em] font-extrabold mb-3 bg-orange/15 px-4 py-2 rounded-full border border-orange/20 inline-block font-poppins">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 max-w-content mx-auto px-6 text-center"
+        >
+          <span className="label-uppercase inline-block mb-3 bg-orange/15 px-4 py-2 rounded-full border border-orange/20">
             Transforming Spaces. Building Trust. Delivering Excellence.
           </span>
-          <h1 className="font-poppins text-3xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">
+          <h1 className="text-h1 text-white mb-6 text-center">
             Our Story & Values
           </h1>
-          <p className="font-inter text-base md:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-body text-white/60 max-w-2xl mx-auto text-center">
             Delivering premium individual villa construction, commercial spaces, and custom luxury interiors across Chennai for over a decade.
           </p>
-        </div>
+        </motion.div>
       </section>
 
       {/* 2. Company Story Split */}
       <section className="section-padding bg-blueprint bg-white">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
             {/* Story Text */}
             <div>
-              <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3">
-                Decade of Trust
-              </span>
-              <h2 className="text-2xl md:text-4xl font-extrabold mb-6">
+              <span className="label-uppercase">Decade of Trust</span>
+              <h2 className="text-h2">
                 From Scaffolds to Grand Villas
               </h2>
-              <p className="text-black/60 font-inter leading-relaxed mb-6">
+              <p className="text-body text-black/60 mb-6">
                 Royal Construction & Interiors was founded by <strong className="text-black font-semibold">Mr. Fazil Ahamed</strong> with a single objective: to rescue homeowners from unorganized contractors by presenting a professional, engineering-focused design-and-build company. 
               </p>
-              <p className="text-black/60 font-inter leading-relaxed mb-6">
+              <p className="text-body text-black/60 mb-6">
                 Over the past 10 years, we have scaled our services from small renovations in Maduranthakam to building multi-crore luxury oceanfront villas along ECR and corporate software parks in OMR. We operate our own modular cabinetry manufacturing factory, allowing us to maintain 100% control over design alignments and paint finishes.
               </p>
-              <p className="text-black/60 font-inter leading-relaxed">
+              <p className="text-body text-black/60">
                 By uniting structural civil engineers, creative architects, and detailing interior designers under one company, we qualify leads, expedite permits, and manage projects under rigorous safety guidelines.
               </p>
             </div>
 
             {/* Side Image */}
-            <div className="relative rounded-2xl overflow-hidden h-[300px] md:h-[450px] shadow-premium">
+            <div className="relative rounded-[24px] overflow-hidden h-[300px] md:h-[450px] shadow-premium">
               <img 
                 src="/assets/images/project_ecr_villa.png" 
                 alt="Royal construction premium villa handover" 
@@ -93,7 +112,7 @@ export default function About() {
             </div>
 
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 3. Stats Section */}
@@ -101,15 +120,19 @@ export default function About() {
 
       {/* 4. Core Values Grid */}
       <section className="section-padding bg-lightgray">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3 font-poppins">
-              Our Pillars
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
+            <span className="label-uppercase mx-auto text-center">Our Pillars</span>
+            <h2 className="text-h2 text-center">
               Core Principles We Stand By
             </h2>
-            <p className="text-black/60 font-inter leading-relaxed">
+            <p className="text-body mx-auto text-center text-black/60">
               Every concrete batch we mix and blueprint we draw aligns with our standards of safety and transparency.
             </p>
           </div>
@@ -118,7 +141,7 @@ export default function About() {
             {coreValues.map((val, idx) => {
               const Icon = val.icon;
               return (
-                <div key={idx} className="bg-white p-8 rounded-2xl border border-lightgray-border shadow-soft hover:-translate-y-1.5 transition-all duration-300">
+                <div key={idx} className="bg-white p-10 rounded-[24px] border border-lightgray-border shadow-soft hover:-translate-y-1.5 transition-all duration-300">
                   <div className="w-12 h-12 bg-orange/15 text-orange rounded-button flex items-center justify-center mb-6">
                     <Icon className="w-6 h-6" />
                   </div>
@@ -128,27 +151,31 @@ export default function About() {
               );
             })}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 5. Construction Process Checklist */}
       <section className="section-padding bg-blueprint bg-white">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3 font-poppins">
-              Work Flow
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
+            <span className="label-uppercase mx-auto text-center">Work Flow</span>
+            <h2 className="text-h2 text-center">
               Our Structured Build Process
             </h2>
-            <p className="text-black/60 font-inter leading-relaxed">
+            <p className="text-body mx-auto text-center text-black/60">
               We guide you smoothly through design milestones to municipal approvals and physical execution.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {processSteps.map((step, idx) => (
-              <div key={idx} className="p-8 border border-lightgray-border bg-white rounded-2xl shadow-soft relative overflow-hidden group hover:border-orange/20 transition-all">
+              <div key={idx} className="p-8 md:p-10 border border-lightgray-border bg-white rounded-[24px] shadow-soft relative overflow-hidden group hover:border-orange/20 transition-all">
                 <span className="absolute top-4 right-6 font-poppins font-extrabold text-5xl text-orange/10 group-hover:text-orange/20 transition-colors select-none">
                   {step.step}
                 </span>
@@ -157,20 +184,24 @@ export default function About() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 6. Leadership Profiles */}
       <section className="section-padding bg-black text-white relative overflow-hidden">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3 font-poppins">
-              The Directors
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-white">
+            <span className="label-uppercase mx-auto text-center">The Directors</span>
+            <h2 className="text-h2 text-center text-white">
               Accredited Core Engineering Minds
             </h2>
-            <p className="text-white/50 font-inter leading-relaxed">
+            <p className="text-body mx-auto text-center text-white/50">
               Meet the licensed engineering minds directing site workflows and customizing architectural plans.
             </p>
           </div>
@@ -187,27 +218,31 @@ export default function About() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 7. Certifications & Affiliations */}
       <section className="section-padding bg-lightgray">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3">
-              Licensing
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
+            <span className="label-uppercase mx-auto text-center">Licensing</span>
+            <h2 className="text-h2 text-center">
               Registered Credentials & Licences
             </h2>
-            <p className="text-black/60 font-inter leading-relaxed">
+            <p className="text-body mx-auto text-center text-black/60">
               We comply with building codes, securing zoning permits, and structural stability certifications.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {certifications.map((cert, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-2xl border border-lightgray-border shadow-soft flex items-center gap-4 hover:-translate-y-1 transition-all duration-300">
+              <div key={idx} className="bg-white p-8 rounded-[24px] border border-lightgray-border shadow-soft flex items-center gap-4 hover:-translate-y-1 transition-all duration-300">
                 <div className="w-10 h-10 rounded-button bg-orange/15 text-orange flex items-center justify-center flex-shrink-0">
                   <Award className="w-5 h-5" />
                 </div>
@@ -218,7 +253,7 @@ export default function About() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
     </div>

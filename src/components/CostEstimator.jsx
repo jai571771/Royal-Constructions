@@ -113,18 +113,16 @@ export default function CostEstimator() {
 
       <div className="container-custom">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3">
-            Budget Planner
-          </span>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
+          <span className="label-uppercase mx-auto text-center">Budget Planner</span>
+          <h2 className="text-h2 text-center text-white">
             Interactive Cost Estimator
           </h2>
-          <p className="text-white/60 font-inter leading-relaxed">
+          <p className="text-body mx-auto text-center text-white/60">
             Specify your construction details below and get a localized, customized price bracket estimate instantly.
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto bg-black-muted/60 border border-white/10 rounded-2xl p-6 md:p-10 shadow-premium backdrop-blur-md">
+        <div className="max-w-3xl mx-auto bg-black-muted/60 border border-white/10 rounded-[24px] p-6 md:p-10 shadow-premium backdrop-blur-md">
           {!isSubmitted ? (
             <div>
               {/* Progress Steps Indicator */}

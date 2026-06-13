@@ -61,13 +61,11 @@ export default function BeforeAfterSlider() {
     <section className="section-padding bg-lightgray">
       <div className="container-custom">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3">
-            Real Transformations
-          </span>
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
+          <span className="label-uppercase mx-auto text-center">Real Transformations</span>
+          <h2 className="text-h2 text-center">
             Before & After Showcase
           </h2>
-          <p className="text-black/60 font-inter leading-relaxed">
+          <p className="text-body mx-auto text-center text-black/60">
             Drag the center slider left and right to inspect the quality of our craftsmanship and modern remodeling details.
           </p>
         </div>
@@ -75,7 +73,7 @@ export default function BeforeAfterSlider() {
         {/* Slider Box */}
         <div 
           ref={containerRef}
-          className="relative max-w-4xl mx-auto h-[350px] md:h-[500px] rounded-2xl overflow-hidden shadow-premium select-none cursor-ew-resize border border-lightgray-border"
+          className="relative max-w-4xl mx-auto h-[350px] md:h-[500px] rounded-[24px] overflow-hidden shadow-premium select-none cursor-ew-resize border border-lightgray-border"
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
           onMouseMove={handleMouseMove}

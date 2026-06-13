@@ -1,4 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { motion } from 'framer-motion';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } 
+  }
+};
 
 function SingleCounter({ target, label, suffix = "", duration = 2000 }) {
   const [count, setCount] = useState(0);
@@ -38,11 +48,11 @@ function SingleCounter({ target, label, suffix = "", duration = 2000 }) {
   }, [hasStarted, target, duration]);
 
   return (
-    <div ref={elementRef} className="flex flex-col items-center p-6 text-center border-r border-white/10 last:border-0 md:border-r">
-      <span className="font-poppins text-4xl md:text-5xl lg:text-6xl font-extrabold text-orange tracking-tight mb-2 select-none">
+    <div ref={elementRef} className="flex flex-col items-center p-6 text-center border-b border-white/10 md:border-b-0 md:border-r border-white/10 last:border-0">
+      <span className="font-poppins text-4xl md:text-5xl lg:text-6xl font-extrabold text-orange tracking-tight mb-3 select-none">
         {count}{suffix}
       </span>
-      <span className="font-inter text-xs md:text-sm uppercase tracking-widest text-white/50 font-medium">
+      <span className="font-inter text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/55 font-semibold">
         {label}
       </span>
     </div>
@@ -58,9 +68,15 @@ export default function StatsCounter() {
   ];
 
   return (
-    <section className="bg-black py-16 border-y border-white/10">
-      <div className="container-custom">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-4">
+    <section className="bg-black py-20 md:py-24 border-y border-white/10">
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={fadeInUp}
+        className="container-custom"
+      >
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {stats.map((stat, idx) => (
             <SingleCounter 
               key={idx} 
@@ -70,7 +86,7 @@ export default function StatsCounter() {
             />
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

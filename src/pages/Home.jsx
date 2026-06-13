@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, Star, ChevronDown, CheckCircle2, Play, Users, Award, Calendar, ExternalLink, ShieldCheck, Mail } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import StatsCounter from '../components/StatsCounter';
 import ProjectCard from '../components/ProjectCard';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
@@ -8,6 +9,27 @@ import CostEstimator from '../components/CostEstimator';
 import { servicesData } from '../data/servicesData';
 import { projectsData } from '../data/projectsData';
 import { blogData } from '../data/blogData';
+
+// Reusable motion variants for section reveals
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } 
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.05
+    }
+  }
+};
 
 export default function Home() {
   const navigate = useNavigate();
@@ -111,33 +133,55 @@ export default function Home() {
               bgIndex === 1 ? 'opacity-100' : 'opacity-0'
             }`}
           />
-        </div>
-
-        {/* Content Container */}
+        </div>        {/* Content Container */}
         <div className="relative z-10 max-w-content mx-auto px-6 w-full">
-          <div className="max-w-3xl flex flex-col items-start text-left animate-fade-in">
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="max-w-3xl flex flex-col items-start text-left"
+          >
             
             {/* Hiring/Consultation Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-xs font-semibold text-white mb-6 select-none">
+            <motion.div 
+              variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-xs font-semibold text-white mb-6 select-none"
+            >
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span>Chennai's Premier Builder</span>
               <span className="text-white/20">|</span>
               <span className="text-white/80">Book a Site Consultation</span>
               <ArrowRight className="w-3.5 h-3.5 text-white/50" />
-            </div>
+            </motion.div>
 
             {/* Title */}
-            <h1 className="font-poppins text-4xl sm:text-5xl lg:text-[52px] font-extrabold text-white leading-[1.1] tracking-tight mb-6 animate-fade-up">
-              We Use Expert Engineering to Deliver <span className="text-orange">Stronger, Smarter</span> Construction in Chennai
-            </h1>
+            <motion.h1 
+              variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
+              className="text-h1 text-white mb-8 max-w-[22ch]"
+            >
+              <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="inline-block">We Use Expert Engineering&nbsp;</motion.span>
+              <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="inline-block">to Deliver&nbsp;</motion.span>
+              <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="inline-block text-orange">Stronger, Smarter&nbsp;</motion.span>
+              <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} className="inline-block">Construction in Chennai</motion.span>
+            </motion.h1>
 
             {/* Description */}
-            <p className="font-inter text-base sm:text-lg text-white/70 leading-relaxed mb-8 max-w-xl">
+            <motion.p 
+              variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-body text-white/70 mb-10 max-w-[50ch]"
+            >
               From ECR to OMR, we've been Chennai's trusted builders for 10+ years—delivering on-time, budget-friendly projects with concrete-strength reliability.
-            </p>
+            </motion.p>
 
             {/* Glassmorphic Consultation capsule */}
-            <form onSubmit={handleConsultationSubmit} className="relative flex flex-col sm:flex-row items-center p-2 rounded-2xl sm:rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-premium max-w-lg mb-8 gap-2 w-full">
+            <motion.form 
+              variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              onSubmit={handleConsultationSubmit} 
+              className="relative flex flex-col sm:flex-row items-center p-2 rounded-[24px] sm:rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-premium max-w-lg mb-[60px] gap-2 w-full"
+            >
               <div className="flex items-center gap-3 px-3 flex-grow w-full">
                 <Mail className="w-5 h-5 text-white/40 flex-shrink-0" />
                 <input 
@@ -150,7 +194,7 @@ export default function Home() {
               </div>
               <button 
                 type="submit" 
-                className="w-full sm:w-auto px-6 h-12 bg-white hover:bg-orange hover:text-white text-black font-poppins font-bold text-sm rounded-xl sm:rounded-full transition-all duration-300 flex-shrink-0 flex items-center justify-center gap-2 shadow-soft"
+                className="w-full sm:w-auto px-6 h-12 bg-white hover:bg-orange hover:text-white text-black font-inter font-semibold text-sm rounded-full transition-all duration-300 ease-in-out flex-shrink-0 flex items-center justify-center gap-2 shadow-soft hover:-translate-y-0.5"
               >
                 Book a Consultation
               </button>
@@ -166,87 +210,99 @@ export default function Home() {
                   <path d="M 13 27.5 L 14 32.5 M 15 26 L 17 34 M 17 24.5 L 19 35.5 M 19 22.8 L 21 37.2 M 21 21.2 L 23 38.8 M 23 19.6 L 24 28 M 23 40.4 L 24 32" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/>
                 </svg>
               </div>
-            </form>
+            </motion.form>
 
             {/* Specialists Team Avatars */}
-            <div className="flex items-center gap-4 mb-8 select-none">
-              <div className="flex -space-x-3">
-                <div className="w-9 h-9 rounded-full border-2 border-black overflow-hidden bg-white/10">
+            <motion.div 
+              variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="flex items-center gap-4 mb-8 select-none"
+            >
+              <div className="flex -space-x-4">
+                <div className="w-12 h-12 rounded-full border-2 border-black overflow-hidden bg-white/10">
                   <img src="/assets/images/team_1.png" alt="Mr. Fazil Ahamed" className="w-full h-full object-cover" />
                 </div>
-                <div className="w-9 h-9 rounded-full border-2 border-black overflow-hidden bg-white/10">
+                <div className="w-12 h-12 rounded-full border-2 border-black overflow-hidden bg-white/10">
                   <img src="/assets/images/team_2.png" alt="Meenakshi Sundaram" className="w-full h-full object-cover" />
                 </div>
-                <div className="w-9 h-9 rounded-full border-2 border-black overflow-hidden bg-white/10">
+                <div className="w-12 h-12 rounded-full border-2 border-black overflow-hidden bg-white/10">
                   <img src="/assets/images/team_3.png" alt="Er. Rajesh Kumar" className="w-full h-full object-cover" />
                 </div>
-                <div className="w-9 h-9 rounded-full border-2 border-black overflow-hidden bg-white/10 flex items-center justify-center bg-orange text-white text-[10px] font-bold">
+                <div className="w-12 h-12 rounded-full border-2 border-black overflow-hidden bg-white/10 flex items-center justify-center bg-orange text-white text-xs font-bold">
                   +12
                 </div>
               </div>
               <div className="flex flex-col">
-                <span className="text-xs md:text-sm font-semibold text-white">15+ Construction Specialists</span>
-                <span className="text-[10px] md:text-xs text-white/50">Dedicated to Your Project's Success</span>
+                <span className="text-sm md:text-base font-semibold text-white">15+ Construction Specialists</span>
+                <span className="text-xs md:text-sm text-white/60">Dedicated to Your Project's Success</span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Rating metrics row */}
-            <div className="grid grid-cols-2 gap-6 w-full max-w-md pt-6 border-t border-white/10 mb-8 select-none">
+            <motion.div 
+              variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="grid grid-cols-2 gap-8 w-full max-w-lg pt-6 border-t border-white/10 mb-8 select-none"
+            >
               {/* Google / Reviews.io Column */}
               <div>
-                <div className="flex gap-0.5 mb-1.5 text-orange">
+                <div className="flex gap-0.5 mb-2 text-orange">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-orange text-orange" />
+                    <Star key={i} className="w-5 h-5 fill-orange text-orange" />
                   ))}
                 </div>
-                <span className="block text-xs font-bold text-white mb-0.5">4.9/5 (25k+ Reviews)</span>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-3.5 h-3.5 rounded-full bg-[#FF6B00] text-white flex items-center justify-center font-bold text-[8px] font-inter">★</div>
-                  <span className="text-[10px] tracking-wider uppercase text-white/60 font-bold font-inter">Reviews.io</span>
+                <span className="block text-sm md:text-base font-bold text-white mb-1">4.9/5 (25k+ Reviews)</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-4.5 h-4.5 rounded-full bg-[#FF6B00] text-white flex items-center justify-center font-bold text-[9px] font-inter">★</div>
+                  <span className="text-xs tracking-wider uppercase text-white/70 font-bold font-inter">Reviews.io</span>
                 </div>
               </div>
 
               {/* Trustpilot Column */}
               <div>
-                <div className="flex gap-0.5 mb-1.5">
+                <div className="flex gap-0.5 mb-2">
                   {[...Array(5)].map((_, i) => (
-                    <div key={i} className="w-3.5 h-3.5 bg-emerald-500 flex items-center justify-center rounded-[2px]">
-                      <Star className="w-2.5 h-2.5 fill-white text-white" />
+                    <div key={i} className="w-4.5 h-4.5 bg-emerald-500 flex items-center justify-center rounded-[2px]">
+                      <Star className="w-3.5 h-3.5 fill-white text-white" />
                     </div>
                   ))}
                 </div>
-                <span className="block text-xs font-bold text-white mb-0.5">4.8/5 (54k+ Reviews)</span>
-                <div className="flex items-center gap-1">
-                  <Star className="w-3.5 h-3.5 fill-emerald-500 text-emerald-500" />
-                  <span className="text-[10px] tracking-wider uppercase text-white/60 font-bold font-inter">Trustpilot</span>
+                <span className="block text-sm md:text-base font-bold text-white mb-1">4.8/5 (54k+ Reviews)</span>
+                <div className="flex items-center gap-1.5">
+                  <Star className="w-4.5 h-4.5 fill-emerald-500 text-emerald-500" />
+                  <span className="text-xs tracking-wider uppercase text-white/70 font-bold font-inter">Trustpilot</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Grayscale Partner Logos */}
-            <div className="pt-6 border-t border-white/10 w-full select-none">
-              <span className="text-[10px] uppercase tracking-widest text-white/40 font-bold mb-4 block">
+            <motion.div 
+              variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} 
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="pt-6 border-t border-white/10 w-full select-none"
+            >
+              <span className="text-xs uppercase tracking-widest text-white/50 font-bold mb-4 block">
                 Trusted by hundreds of property owners in Chennai
               </span>
-              <div className="flex flex-wrap items-center gap-6 md:gap-8 opacity-30 hover:opacity-50 transition-opacity duration-300">
+              <div className="flex flex-wrap items-center gap-8 md:gap-10 opacity-55 hover:opacity-80 transition-opacity duration-300">
                 {/* Ramco Cement typography logo */}
-                <div className="text-white font-poppins font-extrabold text-sm tracking-wider uppercase flex items-center gap-1">
-                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <div className="text-white font-poppins font-extrabold text-base tracking-wider uppercase flex items-center gap-1.5">
+                  <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
                     <polygon points="12,2 22,8.5 22,20 12,14 2,20 2,8.5" />
                   </svg>
                   <span>RAMCO</span>
                 </div>
                 {/* UltraTech logo style */}
-                <div className="text-white font-poppins font-black text-sm tracking-tighter uppercase">
+                <div className="text-white font-poppins font-black text-base tracking-tighter uppercase">
                   Ultra<span className="text-orange">Tech</span>
                 </div>
                 {/* JSW Steel */}
-                <div className="text-white font-inter font-black text-base tracking-widest italic uppercase">
-                  JSW <span className="font-normal not-italic text-xs text-white/70">STEEL</span>
+                <div className="text-white font-inter font-black text-lg tracking-widest italic uppercase">
+                  JSW <span className="font-normal not-italic text-sm text-white/70">STEEL</span>
                 </div>
                 {/* Ramco Cements logoipsum Clover styling */}
-                <div className="text-white font-poppins font-extrabold text-sm tracking-wider uppercase flex items-center gap-1">
-                  <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <div className="text-white font-poppins font-extrabold text-base tracking-wider uppercase flex items-center gap-1.5">
+                  <svg className="w-5.5 h-5.5 text-white" viewBox="0 0 24 24" fill="currentColor">
                     <circle cx="6" cy="12" r="4" />
                     <circle cx="18" cy="12" r="4" />
                     <circle cx="12" cy="6" r="4" />
@@ -255,8 +311,26 @@ export default function Home() {
                   <span>ROYAL</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
+          </motion.div>
+        </div>
 
+        {/* Animated Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 select-none pointer-events-none">
+          <span className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold font-inter">Scroll</span>
+          <div className="w-[24px] h-[40px] rounded-full border border-white/20 flex justify-center p-1.5">
+            <motion.div 
+              animate={{ 
+                y: [0, 12, 0], 
+                opacity: [0.3, 1, 0.3] 
+              }}
+              transition={{ 
+                duration: 1.8, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+              className="w-1.5 h-1.5 bg-orange rounded-full"
+            />
           </div>
         </div>
       </section>
@@ -266,39 +340,43 @@ export default function Home() {
 
       {/* 3. ABOUT SECTION */}
       <section className="section-padding bg-blueprint bg-white">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left Content */}
             <div>
-              <span className="text-orange text-xs md:text-sm uppercase tracking-[0.2em] font-extrabold block mb-3 font-poppins">
-                Who We Are
-              </span>
-              <h2 className="text-3xl md:text-5xl font-extrabold mb-6 leading-tight font-poppins">
+              <span className="label-uppercase">Who We Are</span>
+              <h2 className="text-h2">
                 Top Construction & Interior Design Company in <span className="text-orange">Chennai</span>
               </h2>
-              <p className="text-black/75 font-inter text-base md:text-lg leading-relaxed mb-8">
+              <p className="text-body text-black/75 mb-8">
                 Established with a vision to streamline complex building processes, <strong className="text-black font-bold">Royal Construction & Interiors</strong> delivers premium architectural planning, structural engineering, interior decoration, and landscaping services under a single ceiling. We eliminate developer gaps to save you stress, time, and budget.
               </p>
 
-              <div className="flex flex-col gap-5 mb-10 w-full">
-                <div className="flex gap-4 p-6 bg-lightgray rounded-2xl border border-lightgray-border hover:border-orange/20 transition-all shadow-soft w-full group">
+              <div className="flex flex-col gap-6 mb-10 w-full">
+                <div className="flex gap-6 p-8 md:p-10 bg-lightgray rounded-[24px] border border-lightgray-border hover:border-orange/20 transition-all shadow-soft w-full group">
                   <div className="w-12 h-12 rounded-button bg-orange/15 text-orange flex items-center justify-center flex-shrink-0 group-hover:bg-orange group-hover:text-white transition-all">
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-poppins font-extrabold text-base text-black mb-1.5">Our Mission</h4>
-                    <p className="font-inter text-xs md:text-sm text-black/60 leading-relaxed">
+                    <h4 className="font-poppins font-bold text-lg text-black mb-1.5">Our Mission</h4>
+                    <p className="font-inter text-sm md:text-base text-black/60 leading-relaxed">
                       To erect structural frameworks engineered for absolute seismic safety, and customize bespoke living spaces reflecting client lifestyle aesthetics.
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-4 p-6 bg-lightgray rounded-2xl border border-lightgray-border hover:border-orange/20 transition-all shadow-soft w-full group">
+                <div className="flex gap-6 p-8 md:p-10 bg-lightgray rounded-[24px] border border-lightgray-border hover:border-orange/20 transition-all shadow-soft w-full group">
                   <div className="w-12 h-12 rounded-button bg-gold/15 text-gold flex items-center justify-center flex-shrink-0 group-hover:bg-gold group-hover:text-white transition-all">
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-poppins font-extrabold text-base text-black mb-1.5">Our Vision</h4>
-                    <p className="font-inter text-xs md:text-sm text-black/60 leading-relaxed">
+                    <h4 className="font-poppins font-bold text-lg text-black mb-1.5">Our Vision</h4>
+                    <p className="font-inter text-sm md:text-base text-black/60 leading-relaxed">
                       To be Chennai's most trusted builder synonymous with quality material inspections, transparency in scheduling, and certified structural handovers.
                     </p>
                   </div>
@@ -338,20 +416,24 @@ export default function Home() {
               />
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 4. SERVICES SECTION */}
       <section className="section-padding bg-lightgray">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3 font-poppins">
-              Expert Solutions
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4 animate-fade-in">
+            <span className="label-uppercase mx-auto text-center">Expert Solutions</span>
+            <h2 className="text-h2 animate-fade-in text-center">
               Our Structural & Service Solutions
             </h2>
-            <p className="text-black/60 font-inter leading-relaxed">
+            <p className="text-body mx-auto text-center text-black/60">
               Click on any card below to smoothly expand its structural specifications, modular parameters, and consult links.
             </p>
           </div>
@@ -364,7 +446,7 @@ export default function Home() {
                 <div
                   key={svc.id}
                   onClick={() => setActiveServiceIdx(idx)}
-                  className={`relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-700 ease-in-out border border-white/5 shadow-premium flex-shrink-0 group ${
+                  className={`relative rounded-[24px] overflow-hidden cursor-pointer transition-all duration-700 ease-in-out border border-white/5 shadow-premium flex-shrink-0 group ${
                     isActive 
                       ? 'flex-[4.5] md:flex-[5] bg-black' 
                       : 'flex-[1] bg-black-rich md:hover:bg-black/90'
@@ -404,7 +486,7 @@ export default function Home() {
                     <div className="hidden sm:grid grid-cols-2 gap-x-6 gap-y-2 mb-6 max-w-xl">
                       {svc.features.slice(0, 4).map((f, fIdx) => (
                         <div key={fIdx} className="flex items-center gap-1.5 text-white/80 font-inter text-xs">
-                          <span className="text-orange text-xs">✔</span>
+                           <span className="text-orange text-xs">✔</span>
                           <span className="truncate">{f}</span>
                         </div>
                       ))}
@@ -449,7 +531,7 @@ export default function Home() {
               );
             })}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 5. WHY CHOOSE US */}
@@ -457,7 +539,13 @@ export default function Home() {
         {/* Accent glows */}
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-orange/5 blur-[120px] rounded-full pointer-events-none" />
 
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left Image */}
             <div className="relative rounded-2xl overflow-hidden h-[300px] md:h-[500px]">
@@ -480,10 +568,8 @@ export default function Home() {
 
             {/* Right Benefits */}
             <div className="flex flex-col justify-center">
-              <span className="text-orange text-lg md:text-xl uppercase tracking-[0.2em] font-extrabold block mb-4 font-poppins">
-                Our Advantage
-              </span>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-8 leading-tight font-poppins">
+              <span className="label-uppercase">Our Advantage</span>
+              <h2 className="text-h2 text-white">
                 Engineering Custom Spaces with Certified Materials
               </h2>
 
@@ -508,19 +594,22 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 6. PROJECTS GALLERY PREVIEW */}
       <section className="section-padding bg-blueprint bg-white">
-        <div className="container-custom">
-          
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
-              <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3">
-                Completed Portfolios
-              </span>
-              <h2 className="text-3xl md:text-4xl font-extrabold leading-tight">
+              <span className="label-uppercase">Completed Portfolios</span>
+              <h2 className="text-h2">
                 Featured Projects Showcase
               </h2>
             </div>
@@ -556,7 +645,7 @@ export default function Home() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 7. BEFORE & AFTER SECTION */}
@@ -564,23 +653,27 @@ export default function Home() {
 
       {/* 8. INTERIOR SHOWCASE */}
       <section className="section-padding bg-blueprint bg-white">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3">
-              Premium Styling
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
+            <span className="label-uppercase mx-auto text-center">Premium Styling</span>
+            <h2 className="text-h2 text-center">
               Interior Showcase Gallery
             </h2>
-            <p className="text-black/60 font-inter leading-relaxed">
+            <p className="text-body mx-auto text-center text-black/60">
               Step inside some of our bespoke interior creations—featuring Italian kitchens, minimalist lounges, and executive workstation layouts.
             </p>
           </div>
 
           {/* Masonry Layout Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
             {interiorShowcase.map((item, idx) => (
-              <div key={idx} className="group relative rounded-2xl overflow-hidden h-72 shadow-soft border border-lightgray-border cursor-pointer">
+              <div key={idx} className="group relative rounded-[24px] overflow-hidden h-72 shadow-soft border border-lightgray-border cursor-pointer">
                 <img 
                   src={item.img} 
                   alt={item.title} 
@@ -601,22 +694,26 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 9. TESTIMONIALS SECTION */}
       <section className="section-padding bg-premium-gradient text-white relative overflow-hidden">
         <div className="absolute top-0 left-1/3 w-80 h-80 bg-orange/5 blur-[100px] rounded-full pointer-events-none" />
 
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3 font-poppins">
-              Testimonials
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
+            <span className="label-uppercase mx-auto text-center">Testimonials</span>
+            <h2 className="text-h2 text-center text-white">
               What Our Happy Clients Say
             </h2>
-            <p className="text-white/50 font-inter leading-relaxed">
+            <p className="text-body mx-auto text-center text-white/50">
               Client satisfaction is our primary benchmark. Read reviews from property owners across Chennai.
             </p>
           </div>
@@ -650,7 +747,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 9.5. DYNAMIC SCROLLING MARQUEE */}
@@ -704,22 +801,26 @@ export default function Home() {
 
       {/* 10. TEAM SECTION */}
       <section className="section-padding bg-blueprint bg-white">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3">
-              Our Leadership
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
+            <span className="label-uppercase mx-auto text-center">Our Leadership</span>
+            <h2 className="text-h2 text-center">
               Meet Our Expert Professionals
             </h2>
-            <p className="text-black/60 font-inter leading-relaxed">
+            <p className="text-body mx-auto text-center text-black/60">
               Accredited engineering minds and interior decorators dedicated to structural safety and aesthetics.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {team.map((m, idx) => (
-              <div key={idx} className="bg-white rounded-2xl border border-lightgray-border shadow-soft p-8 md:p-10 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-premium group flex flex-col items-center">
+              <div key={idx} className="bg-white rounded-[24px] border border-lightgray-border shadow-soft p-10 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-premium group flex flex-col items-center">
                 <div className="w-36 h-36 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-orange/20 mb-8 group-hover:border-orange transition-colors flex-shrink-0">
                   <img src={m.img} alt={m.name} className="w-full h-full object-cover" />
                 </div>
@@ -733,7 +834,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 11. COMPANY VIDEO SECTION */}
@@ -746,7 +847,13 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-black/60" />
         </div>
-        <div className="relative z-10 text-center max-w-xl mx-auto px-6">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="relative z-10 text-center max-w-xl mx-auto px-6"
+        >
           <button 
             type="button"
             className="w-20 h-20 bg-orange text-white rounded-full flex items-center justify-center mx-auto mb-6 hover:scale-110 transition-transform shadow-glow focus:outline-none"
@@ -754,13 +861,13 @@ export default function Home() {
           >
             <Play className="w-8 h-8 fill-white ml-1" />
           </button>
-          <h3 className="font-poppins text-2xl font-extrabold text-white mb-3">
+          <h3 className="text-h3 text-white mb-3 text-center">
             Watch Our Construction Process
           </h3>
-          <p className="font-inter text-sm text-white/70 leading-relaxed">
+          <p className="text-body text-white/70 text-center mx-auto">
             Take a photorealistic 3D virtual walkthrough of our project layouts, highlighting steel column details and modular joineries.
           </p>
-        </div>
+        </motion.div>
       </section>
 
       {/* 12. COST ESTIMATOR SECTION */}
@@ -768,15 +875,19 @@ export default function Home() {
 
       {/* 13. FAQ SECTION */}
       <section className="section-padding bg-blueprint bg-white">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3">
-              Common Questions
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
+            <span className="label-uppercase mx-auto text-center">Common Questions</span>
+            <h2 className="text-h2 text-center">
               Frequently Asked Questions
             </h2>
-            <p className="text-black/60 font-inter leading-relaxed">
+            <p className="text-body mx-auto text-center text-black/60">
               Clear answers regarding construction permits, budgets, curation materials, and structural warranty scopes.
             </p>
           </div>
@@ -785,7 +896,7 @@ export default function Home() {
             {faqs.map((faq, idx) => (
               <div 
                 key={idx} 
-                className="border border-lightgray-border rounded-2xl overflow-hidden bg-white shadow-soft transition-all duration-300"
+                className="border border-lightgray-border rounded-[24px] overflow-hidden bg-white shadow-soft transition-all duration-300"
               >
                 <button
                   type="button"
@@ -798,26 +909,40 @@ export default function Home() {
                   }`} />
                 </button>
                 
-                {faqOpen === idx && (
-                  <div className="px-6 pb-6 pt-2 font-inter text-xs md:text-sm text-black/60 leading-relaxed border-t border-lightgray-border animate-fade-in">
-                    {faq.a}
-                  </div>
-                )}
+                <AnimatePresence initial={false}>
+                  {faqOpen === idx && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-6 pt-2 font-inter text-xs md:text-sm text-black/60 leading-relaxed border-t border-lightgray-border">
+                        {faq.a}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 14. BLOG SECTION PREVIEW */}
       <section className="section-padding bg-lightgray">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div>
-              <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3">
-                News & Guides
-              </span>
-              <h2 className="text-3xl md:text-4xl font-extrabold leading-tight">
+              <span className="label-uppercase">News & Guides</span>
+              <h2 className="text-h2">
                 Latest Resources & Tips
               </h2>
             </div>
@@ -830,7 +955,7 @@ export default function Home() {
           {/* Grid articles */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogData.map((article) => (
-              <div key={article.id} className="bg-white rounded-2xl overflow-hidden border border-lightgray-border shadow-soft flex flex-col h-full group">
+              <div key={article.id} className="bg-white rounded-[24px] overflow-hidden border border-lightgray-border shadow-soft flex flex-col h-full group">
                 <div className="h-56 overflow-hidden w-full relative flex-shrink-0">
                   <img 
                     src={article.image} 
@@ -841,7 +966,7 @@ export default function Home() {
                     {article.category}
                   </span>
                 </div>
-                <div className="p-6 md:p-8 flex flex-col flex-grow">
+                <div className="p-8 md:p-10 flex flex-col flex-grow">
                   <span className="block text-[11px] font-semibold text-black/40 uppercase tracking-widest font-inter mb-2">
                     {article.date} · {article.readTime}
                   </span>
@@ -862,39 +987,45 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 15. CONTACT CTA */}
-      <section className="bg-orange py-20 text-white relative overflow-hidden">
+      <section className="bg-orange py-24 md:py-28 lg:py-32 text-white relative overflow-hidden">
         {/* Decorative circle glow */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none" />
         
-        <div className="container-custom relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10"
+        >
           <div className="max-w-2xl text-center lg:text-left">
-            <h2 className="font-poppins text-3xl md:text-4xl font-extrabold mb-4 text-white">
+            <h2 className="text-h2 text-white">
               Ready to Discuss Your Construction or Interior Project?
             </h2>
-            <p className="font-inter text-base md:text-lg text-white/85">
+            <p className="text-body text-white/85 max-w-[65ch]">
               Secure your free site survey and premium layout blueprint checklist today. Let's make your dream space happen.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto flex-shrink-0 justify-center">
             <Link 
               to="/contact" 
-              className="h-14 px-8 bg-black hover:bg-white hover:text-black text-white rounded-button font-inter font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-soft w-full sm:w-auto"
+              className="h-[60px] px-8 bg-black hover:bg-white hover:text-black text-white rounded-[16px] font-inter font-semibold transition-all duration-400 ease-in-out flex items-center justify-center gap-2 shadow-soft w-full sm:w-auto hover:-translate-y-1"
             >
               Start Your Project
               <ArrowRight className="w-5 h-5" />
             </Link>
             <a 
               href="tel:+917305485051" 
-              className="h-14 px-8 border-2 border-white hover:bg-white hover:text-orange text-white rounded-button font-inter font-semibold transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto"
+              className="h-[60px] px-8 border-2 border-white hover:bg-white hover:text-orange text-white rounded-[16px] font-inter font-semibold transition-all duration-400 ease-in-out flex items-center justify-center gap-2 w-full sm:w-auto hover:-translate-y-1"
             >
               Call Office
             </a>
           </div>
-        </div>
+        </motion.div>
       </section>
 
     </div>

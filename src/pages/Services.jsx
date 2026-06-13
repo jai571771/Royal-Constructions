@@ -2,6 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Check, ShieldCheck, Home, Briefcase, Palette, Wrench, Compass, Layers, ArrowRight } from 'lucide-react';
 import { servicesData } from '../data/servicesData';
+import { motion } from 'framer-motion';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } 
+  }
+};
 
 export default function Services() {
   
@@ -27,17 +37,22 @@ export default function Services() {
           />
           <div className="absolute inset-0 bg-black/75" />
         </div>
-        <div className="relative z-10 max-w-content mx-auto px-6 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 max-w-content mx-auto px-6 text-center"
+        >
           <span className="text-orange text-xs md:text-sm uppercase tracking-[0.25em] font-extrabold mb-3 bg-orange/15 px-4 py-2 rounded-full border border-orange/20 inline-block font-poppins">
             Transforming Spaces. Building Trust. Delivering Excellence.
           </span>
-          <h1 className="font-poppins text-3xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">
+          <h1 className="text-h1 text-white mb-6">
             Our Building & Design Services
           </h1>
-          <p className="font-inter text-base md:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-body text-white/60 max-w-2xl mx-auto mb-6">
             High-grade materials execution, custom structural calculations, and luxury woodwork cabinetry layouts in Chennai.
           </p>
-        </div>
+        </motion.div>
       </section>
 
       {/* 2. Detailed Service Items Grid */}
@@ -49,8 +64,12 @@ export default function Services() {
               const isEven = idx % 2 === 0;
 
               return (
-                <div 
+                <motion.div 
                   key={svc.id}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-100px" }}
+                  variants={fadeInUp}
                   className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center border-b border-lightgray-border pb-20 last:border-0 last:pb-0 ${
                     isEven ? '' : 'lg:flex-row-reverse'
                   }`}
@@ -72,13 +91,13 @@ export default function Services() {
 
                   {/* Service Details Side */}
                   <div className={isEven ? 'lg:order-1' : ''}>
-                    <span className="text-orange text-xs font-bold uppercase tracking-widest font-inter block mb-2">
+                    <span className="label-uppercase">
                       Package 0{idx + 1}
                     </span>
-                    <h2 className="font-poppins text-2xl md:text-3xl font-extrabold text-black mb-4">
+                    <h2 className="text-h2 text-black mb-4">
                       {svc.title}
                     </h2>
-                    <p className="font-inter text-sm md:text-base text-black/60 leading-relaxed mb-6">
+                    <p className="text-body text-black/60 mb-6">
                       {svc.longDesc}
                     </p>
 
@@ -97,7 +116,7 @@ export default function Services() {
                       <Link 
                         to="/contact" 
                         state={{ selectService: svc.title }}
-                        className="btn-dark w-full sm:w-auto h-12 text-sm"
+                        className="btn-dark w-full sm:w-auto"
                       >
                         Request Consultation
                         <ArrowRight className="w-4 h-4" />
@@ -112,7 +131,7 @@ export default function Services() {
                     </div>
                   </div>
 
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -121,15 +140,21 @@ export default function Services() {
 
       {/* 3. Materials Grade Section */}
       <section className="section-padding bg-black text-white relative overflow-hidden">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-orange text-sm uppercase tracking-widest font-semibold block mb-3 font-poppins">
+            <span className="label-uppercase">
               Quality Assurance
             </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4 text-white">
+            <h2 className="text-h2 mb-4 text-white">
               Strict Curation of Branded Materials
             </h2>
-            <p className="text-white/50 font-inter leading-relaxed">
+            <p className="text-body text-white/50 max-w-2xl mx-auto mb-6">
               We never cut corners. Every building structure is erected using steel and concrete grades passing quality inspections.
             </p>
           </div>
@@ -140,7 +165,7 @@ export default function Services() {
               { title: "Modular Cabinet Interior", desc: "High-density exterior-grade MDF and hardwood birch plywood layers, pressed with 1.0mm heat-resistant laminates and soft-close hardware (Hettich)." },
               { title: "Plumbing & Wiring Networks", desc: "Corrosion-proof CPVC plumbing grids (Supreme/Ashirvad) paired with flame-retardant multi-strand copper cables (Finolex/Havells) and safe MCB breakers." }
             ].map((pkg, idx) => (
-              <div key={idx} className="glass-dark-card flex flex-col p-8 hover:border-orange/20 transition-colors">
+              <div key={idx} className="glass-dark-card flex flex-col hover:border-orange/20 transition-colors">
                 <div className="w-10 h-10 rounded-button bg-orange/15 text-orange flex items-center justify-center mb-6">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
@@ -149,27 +174,33 @@ export default function Services() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 4. Bottom Lead Trigger CTA */}
       <section className="bg-lightgray py-20">
-        <div className="container-custom text-center max-w-3xl mx-auto">
-          <h2 className="font-poppins text-3xl font-extrabold mb-4 text-black">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom text-center max-w-3xl mx-auto"
+        >
+          <h2 className="text-h2 mb-4 text-black">
             Looking for a Customized Design-and-Build Quote?
           </h2>
-          <p className="font-inter text-sm md:text-base text-black/60 mb-8 max-w-xl mx-auto">
+          <p className="text-body text-black/60 mb-8 max-w-xl mx-auto">
             Schedule a free site survey. Our engineers will audit soil conditions and review architectural layouts to draft an itemized estimate.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
-            <Link to="/contact" className="btn-primary w-full sm:w-auto h-12 text-sm">
+            <Link to="/contact" className="btn-primary w-full sm:w-auto">
               Start Free Consultation
             </Link>
-            <Link to="/contact" state={{ scrollEstimator: true }} className="btn-dark w-full sm:w-auto h-12 text-sm">
+            <Link to="/contact" state={{ scrollEstimator: true }} className="btn-dark w-full sm:w-auto">
               Launch Cost Estimator
             </Link>
           </div>
-        </div>
+        </motion.div>
       </section>
 
     </div>

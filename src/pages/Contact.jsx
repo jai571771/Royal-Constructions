@@ -2,6 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Mail, Phone, MapPin, Clock, Send, ShieldCheck, CheckCircle2, ChevronDown } from 'lucide-react';
 import CostEstimator from '../components/CostEstimator';
+import { motion } from 'framer-motion';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } 
+  }
+};
 
 export default function Contact() {
   const routerLocation = useLocation();
@@ -75,22 +85,33 @@ export default function Contact() {
           />
           <div className="absolute inset-0 bg-black/75" />
         </div>
-        <div className="relative z-10 max-w-content mx-auto px-6 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 max-w-content mx-auto px-6 text-center"
+        >
           <span className="text-orange text-xs md:text-sm uppercase tracking-[0.25em] font-extrabold mb-3 bg-orange/15 px-4 py-2 rounded-full border border-orange/20 inline-block font-poppins">
             Transforming Spaces. Building Trust. Delivering Excellence.
           </span>
-          <h1 className="font-poppins text-3xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+          <h1 className="text-h1 text-white mb-4">
             Contact Our Office
           </h1>
-          <p className="font-inter text-base text-white/60 max-w-xl mx-auto leading-relaxed">
+          <p className="text-body text-white/60 max-w-xl mx-auto mb-6">
             Schedule a site consultation or request a structural proposal. We respond within 24 business hours.
           </p>
-        </div>
+        </motion.div>
       </section>
 
       {/* 2. Split Layout Form & Details */}
       <section ref={contactFormRef} className="section-padding bg-blueprint bg-white">
-        <div className="container-custom">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="container-custom"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             
             {/* Left Side: Qualified Contact Form */}
@@ -108,10 +129,10 @@ export default function Contact() {
                     />
                   )}
 
-                  <h2 className="font-poppins text-xl md:text-2xl font-extrabold text-black mb-2">
+                  <h2 className="text-h3 text-black mb-2">
                     Inquire About Your Project
                   </h2>
-                  <p className="font-inter text-xs md:text-sm text-black/50 mb-6">
+                  <p className="text-body text-black/50 mb-6">
                     Fill in your details below. This helps our engineers qualify your request before the sales call.
                   </p>
 
@@ -201,7 +222,7 @@ export default function Contact() {
 
                       {projectTypeOpen && (
                         <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-lightgray-border rounded-xl shadow-premium z-50 max-h-60 overflow-y-auto animate-fade-in divide-y divide-lightgray-border">
-                          {[
+                           {[
                             { value: 'Residential', label: 'Residential Construction' },
                             { value: 'Commercial', label: 'Commercial Construction' },
                             { value: 'Interior', label: 'Interior Design' },
@@ -314,7 +335,7 @@ export default function Contact() {
 
                   <button
                     type="submit"
-                    className="btn-primary w-full h-12 text-sm uppercase tracking-wider shadow-glow"
+                    className="btn-primary w-full shadow-soft uppercase tracking-wider font-bold"
                   >
                     <span>Submit Inquiry</span>
                     <Send className="w-4 h-4" />
@@ -325,8 +346,8 @@ export default function Contact() {
                   <div className="w-14 h-14 bg-orange/15 rounded-full flex items-center justify-center mx-auto mb-6">
                     <CheckCircle2 className="w-8 h-8 text-orange" />
                   </div>
-                  <h3 className="font-poppins text-xl font-extrabold text-black mb-2">Inquiry Submitted Successfully!</h3>
-                  <p className="font-inter text-xs md:text-sm text-black/55 mb-6 max-w-sm mx-auto">
+                  <h3 className="text-h3 text-black mb-2">Inquiry Submitted Successfully!</h3>
+                  <p className="text-body text-black/55 mb-6 max-w-sm mx-auto">
                     Thank you, <span className="text-black font-semibold">{formData.name}</span>. Our technical coordinator will call you within 24 business hours to validation details.
                   </p>
                   <button
@@ -343,10 +364,10 @@ export default function Contact() {
             {/* Right Side: Contact Info & Maps */}
             <div className="flex flex-col gap-10 lg:pl-6 w-full">
               <div>
-                <span className="text-orange text-xs font-bold uppercase tracking-widest font-inter block mb-2">
+                <span className="label-uppercase">
                   Head Office
                 </span>
-                <h2 className="font-poppins text-2xl md:text-3xl font-extrabold text-black mb-6">
+                <h2 className="text-h2 text-black mb-6">
                   Get in Touch With Us
                 </h2>
                 
@@ -414,7 +435,7 @@ export default function Contact() {
             </div>
 
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* 3. Bottom Block Cost Estimator */}
